@@ -26,19 +26,17 @@ VALUES
     (15, 'Auto Loan', 'Loan', 4.25, 0.00, 20000.00);
 
 
-/*Select all product names from the database*/
+# Select all product names from the database
 SELECT product_name
 FROM bank_products;
 
-/*Customer is interested in opening a checking or savings
-account but wants more information*/
+# Customer is interested in opening a checking or savings account but wants more information
 SELECT product_name, product_type
 FROM bank_products
 WHERE product_type = 'Savings'
 OR product_type='Checking';
 
-/*Customer decided they want a savings account with a
-good interest rate and no monthly fee*/
+# Customer decided they want a savings account with a good interest rate and no monthly fee
 SELECT product_name, interest_rate
 FROM bank_products
 WHERE product_type = 'Savings'
