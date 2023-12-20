@@ -1,0 +1,98 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE famous_ppl (
+id NUMERIC PRIMARY KEY,
+name TEXT,
+type TEXT,
+friend_id TEXT);
+
+INSERT INTO famous_ppl
+VALUES
+(1, 'Taylor Swift', 'singer', 2),
+(2, 'Beyonce', 'singer', 6),
+(3, 'Pedro Pascal', 'movie star', 4),
+(4, 'JK Rowling', 'author', 3),
+(5, 'Harry Potter', 'fictional character', null),
+(6, 'Jay Z', 'rapper', 2),
+(7, 'Blair Waldorf', 'fictional character', null),
+(8, 'Stephen King', 'author', 4),
+(9, 'Dumbledore', 'fictional character', null),
+(10, 'Serena van der Woodsen', 'fictional character', null);
+
+CREATE TABLE movies (
+id numeric primary key,
+person_id integer,
+title TEXT);
+
+INSERT INTO movies
+VALUES
+(1, 3, 'Strange Way of Life'),
+(2, 5, 'Harry Potter and the Sorcerers Stone'),
+(3,2, 'Dreamgirls');
+
+CREATE TABLE songs (
+id numeric primary key,
+singer_id integer,
+title TEXT
+);
+
+INSERT INTO songs
+VALUES
+(1, 1, 'Cruel Summer'),
+(2, 6, 'Empire State of Mind'),
+(3, 2, 'Crazy in Love'),
+(4, 6, 'Run This Town'),
+(5, 1, 'Shake it Off'),
+(6, 2, 'Halo');
+
+CREATE TABLE books (
+id numeric primary key,
+author_id integer,
+title TEXT);
+
+INSERT INTO books
+VALUES
+(1, 4, 'Harry Potter and the Sorcerers Stone'),
+(2, 8,'It');
+
+CREATE TABLE related_char (
+id INTEGER PRIMARY KEY,
+char_1 INTEGER,
+char_2 INTEGER);
+
+INSERT INTO related_char (char_1, char_2)
+VALUES
+(5, 9),
+(7,10);
+
+SELECT * FROM famous_ppl;
+SELECT * FROM movies;
+SELECT * FROM songs;
+SELECT * FROM books;
+
+/*join*/
+SELECT name, title
+FROM famous_ppl
+JOIN movies
+ON famous_ppl.id = movies.person_id;
+
+/*left outer join*/
+SELECT name, title
+FROM famous_ppl
+LEFT OUTER JOIN songs
+ON famous_ppl.id = songs.singer_id;
+SELECT * FROM songs;
+
+/*self join*/
+SELECT a.name AS celeb, b.name AS friend
+FROM famous_ppl a
+JOIN famous_ppl b
+ON a.friend_id = b.id;
+
+/*combinging multiple joins*/
+SELECT a.name AS character, b.name AS related_character FROM related_char
+    JOIN famous_ppl a
+    ON related_char.char_1 = a.id
+    JOIN famous_ppl b
+    ON related_char.char_2 = b.id;
+
