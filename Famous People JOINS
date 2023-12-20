@@ -1,4 +1,4 @@
-/* Create table about the people and what they do here */
+#Create tables about famous people, movies they're in, songs they've produced, and/or books they have written
 
 CREATE TABLE famous_ppl (
 id NUMERIC PRIMARY KEY,
@@ -65,31 +65,26 @@ VALUES
 (5, 9),
 (7,10);
 
-SELECT * FROM famous_ppl;
-SELECT * FROM movies;
-SELECT * FROM songs;
-SELECT * FROM books;
-
-/*join*/
+# Join related tables famous people and movies
 SELECT name, title
 FROM famous_ppl
 JOIN movies
 ON famous_ppl.id = movies.person_id;
 
-/*left outer join*/
+# Join related tables famous people and songs with left outer join
 SELECT name, title
 FROM famous_ppl
 LEFT OUTER JOIN songs
 ON famous_ppl.id = songs.singer_id;
 SELECT * FROM songs;
 
-/*self join*/
+# Show famous people and their famous friend using a self join
 SELECT a.name AS celeb, b.name AS friend
 FROM famous_ppl a
 JOIN famous_ppl b
 ON a.friend_id = b.id;
 
-/*combinging multiple joins*/
+# Show movie or tv show character and related characters by combining multiple joins
 SELECT a.name AS character, b.name AS related_character FROM related_char
     JOIN famous_ppl a
     ON related_char.char_1 = a.id
