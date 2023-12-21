@@ -1,0 +1,66 @@
+# How many orders were placed in January?
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+# How many of those orers were for iPhone?
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+AND product = 'iPhone';
+
+# Show the customer account numbers for all the orders that were placed in February
+SELECT DISTINCT acctnum
+FROM BIT_DB.customers cust
+INNER JOIN BIT_DB.FebSales FebSales
+ON cust.order_id = FebSales.orderID
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+# Show the cheapest product sold in January and its price
+SELECT DISTINCT product, price
+FROM BIT_DB.JanSales
+WHERE price
+IN (SELECT min(price) FROM BIT_DB.JanSales);
+
+# Another way to show the cheapest product sold in January and its price
+SELECT distinct product, price
+FROM BIT_DB.JanSales
+ORDER BY price ASC
+LIMIT 1;
+
+# Another way to show the cheapest product sold in January and its price
+SELECT DISTINCT product, MIN(price)
+FROM BIT_DB.JanSales Jan
+GROUP BY product, price
+ORDER BY price ASC
+LIMIT 1;
+
+# Another way to show the cheapest product sold in January and its price
+SELECT product, min(price)
+FROM BIT_DB.JanSales Jan
+GROUP BY product, price
+ORDER BY price ASC
+LIMIT 1;
+
+/*Show the total revenue for each product sold in January*/
+SELECT product, SUM(quantity)*price AS totalRevenue
+FROM BIT_DB.JanSales
+GROUP BY product;
+ 
+# Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+SELECT product, SUM(quantity), SUM(quantity)*price AS totalRevenue
+FROM FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY product;
+
+# How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+SELECT COUNT(DISTINCT cust.acctnum), AVG(Quantity*price)
+FROM BIT_DB.FebSales
+LEFT JOIN BIT_DB.customers cust
+ON FebSales.orderID = cust.order_ID
+WHERE FebSales.Quantity >2
+AND length(orderID) = 6
+AND orderID <> 'Order ID';
