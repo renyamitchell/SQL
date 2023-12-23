@@ -93,7 +93,6 @@ SELECT DISTINCT product, price
 FROM BIT_DB.FebSales
 WHERE price
     like '%.99';
-    
 
 # list all the products sold in Los Angeles in February and include how many of each were sold
 SELECT product, SUM(quantity), orderdate
